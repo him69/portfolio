@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import "./globals.css"
+// import "./globals.css"
 import Navbar from './navbar'
 const page = () => {
   const [activeNum, setActiveNum] = useState(1);
