@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react'
 // import "./globals.css"
 import Navbar from './navbar'
+import { format } from 'date-fns';
+// import Tec from './tec/page'
 const page = () => {
   const [activeNum, setActiveNum] = useState(1);
   const maxNum = 2;
@@ -26,9 +28,29 @@ const handleClick = (num) => {
         setActiveNum(prevActiveNum => prevActiveNum < maxNum ? prevActiveNum + 1 : 1);
     }, 3000);
 };
+// getting all project
+const [data,setData]=useState(null);
+const [wdata,setwData]=useState(null);
+useEffect(()=>{
+  fetch('/api/allproject').then((res)=>res.json()).then((data)=>{
+setData(data);
+console.log(data.Projects);
+// data.Projects.forEach(project => {
+//   console.log(project.projType); // Logs each project object
+// });
+  })
+},[])
+// getting working history
+useEffect(()=>{
+  fetch('/api/allworkhistory').then((res)=>res.json()).then((wdata)=>{
+    setwData(wdata);
+    console.log(wdata);
+  })
+},[])
   return (
     <>
     <Navbar/>
+    {/* <Tec/> */}
       {/* header section */}
       <header className='pBgColor text-white' id='home'>
         <div className='flex justify-between container mx-auto'>
@@ -92,7 +114,7 @@ const handleClick = (num) => {
         </div>
         <div className='myBgImage h-[80vh]'></div>
       </section>
-      {/* my projeccts secctioni */}
+      {/* my projeccts secction */}
       <section id='higlights' className='pBgColor text-white'>
         <div className="container mx-auto overflow-hidden">
           <p className='text-center capitalize py-4 pTextColor'>My Skills</p>
@@ -102,7 +124,46 @@ const handleClick = (num) => {
             <div className='midLine tBgColor'>
               <div className='topBall'></div>
             </div>
-            {/* projecct left */}
+            {/* projecct featched higlight */}
+            {data?.Projects.filter(project=>project.highlightProject === true).map((project, index) => (
+        index % 2 === 0
+          ? (
+            // Even project layout
+            <div className="flex justify-center" key={index}>
+              <div className='w-1/2'>
+                {/* Assuming 'projType' and other project-specific details are used here */}
+                <h4 className='text-right text-2xl bLine relative tracking-widest px-2'>{project.projType}</h4>
+                <p className='text-right pTextColor text-xl px-2'>{project.projCat}</p>
+                <div className='projImg mt-4 ml-28'>
+                  {/* Use project-specific image if available */}
+                  <img src={project.projImage || "/images/pr.jpeg"} alt="" />
+                </div>
+              </div>
+              <div className='pt-12 w-1/2 px-2'>
+                <p className='border-b w-fit'>About Project</p>
+                <p className='pr-8 mt-4'>{project.description}</p>
+              </div>
+            </div>
+          )
+          : (
+            // Odd project layout
+            <div className="flex justify-center" key={index}>
+              <div className="pt-12 w-1/2 px-2">
+                <p className="abLine text-right relative">About Project</p>
+                <p className="mt-4 text-right pl-8">{project.description}</p>
+              </div>
+              <div className="w-1/2">
+                <h4 className="text-2xl bLine2 relative tracking-widest px-2">{project.projType}</h4>
+                <p className="pTextColor text-xl px-2">{project.projCat}</p>
+                <div className="projImg mt-4" style={{ marginLeft: '45%' }}>
+                  {/* Use project-specific image if available */}
+                  <img src={project.projImage || "/images/pr.jpeg"} alt="" />
+                </div>
+              </div>
+            </div>
+          )
+      ))}
+            {/* odd project */}
             <div className='flex justify-center'>
               <div className='w-1/2'>
                 <h4 className='text-right text-2xl bLine relative tracking-widest px-2'>Illustrator</h4>
@@ -116,7 +177,7 @@ const handleClick = (num) => {
                 <p className='pr-8 mt-4'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem voluptates fugiat possimus, repudiandae ut, obcaecati modi, esse voluptatibus expedita qui voluptatum! Doloremque minima consectetur, vel fugiat qui quaerat debitis incidunt?</p>
               </div>
             </div>
-            {/* project right */}
+            {/* even projcecct*/}
             <div class="flex justify-center">
               <div class="pt-12 w-1/2 px-2">
                 <p class="abLine text-right relative">About Project</p>
@@ -159,7 +220,17 @@ const handleClick = (num) => {
             </div>
           </div>
           {/* projects show case */}
+         
           <div className="grid grid-cols-4 gap-4 my-12">
+          {data?.Projects.map((p,i)=>  (
+              <div className='relative'>
+              <div className="type absolute left-0 top-4 px-8 py-4 tBgColor rounded-e-md">
+                <p className='text-lg'>{p.projCat}</p>
+              </div>
+              <img src={p.projImage} alt={p.projImage} className='h-full'/>
+            </div>
+            ))
+          }
             <div className='relative'>
               <div className="type absolute left-0 top-4 px-8 py-4 tBgColor rounded-e-md">
                 <p className='text-lg'>cover art</p>
@@ -205,6 +276,24 @@ const handleClick = (num) => {
           <p className='pTextColor text-center py-4'>Work History</p>
           <h3 className='text-3xl font-bold text-center'>Working with Passion</h3>
           <div className='grid grid-cols-2 gap-11 py-12'>
+            {wdata?.wh.map((wh,i)=>(
+               <div className='flex' key={i}>
+               <div  className='mr-8'>
+                 <div className='workNum'><h2>{i+1}</h2></div>
+                 
+               </div>
+               <div>
+                 <h4 className='text-2xl font-bold'>{wh.compName}</h4>
+                 <div className='flex justify-between '>
+                   <p className='text-zinc-400'>as {wh.designation}</p>
+                   <p className='font-bold'>{format(wh.from, 'yyyy-MMM')} - {format(wh.to,'yyyy-MMM')}</p>
+                 </div>
+                 <div>
+                   <p className='mt-4'>{wh.description}</p>
+                 </div>
+               </div>
+             </div>
+            ))}
             <div className='flex'>
               <div  className='mr-8'>
                 <div className='workNum'><h2>1</h2></div>
