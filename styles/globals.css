@@ -154,3 +154,7 @@ background-color: var(--tertiary);
 border-radius: 2px;
 transition: all .3s ease-in;
 }
+/* admin css */
+.linkDiv.active{
+  border-bottom: 1px solid var(--tertiary);
+}
