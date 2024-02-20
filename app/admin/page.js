@@ -10,7 +10,7 @@ const page = () => {
                 <Sidebar />
                 
                 <div className="mainDiv p-6">
-                <p className='text-center font-bold text-3xl'>Projects</p>
+                <p className='text-center font-bold'>Projects</p>
                     <table className='table-auto'>
                         <tr><th>S.no</th>
                             <th>Name</th>

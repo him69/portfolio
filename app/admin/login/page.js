@@ -1,6 +1,7 @@
 import React from 'react'
 import '@/styles/globals.css'
 const page = () => {
+  
   return (
     <div className='h-screen w-screen grid place-items-center '>
       <div className='p-6 border border-slate-950 w-1/4'>
