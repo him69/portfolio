@@ -1,17 +1,24 @@
 import { Project} from "@/model/Project";
 import { connectToDatabse } from "../connectdb";
-
+import { connectDb } from "@/utils/db";
+import jwt from "jsonwebtoken"
+import { User } from "@/model/User";
 
 async function createProjects(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'Method Not Allowed' });
   }
-
-  const { projImage, projType, projCat, description, software, highlightProject } = req.body;
+ 
+  
 
   try {
+    await connectDb();
+    const token = req.headers.cookie.split("=")[1];
+    const decode = jwt.verify(token,process.env.JWT_SECRET)
+     const userId = decode.user_id;
+     const { projImage, projType, projCat, description, software, highlightProject } = req.body;
     const newProject = new Project({
-    projImage, projType, projCat, description, software, highlightProject 
+    projImage, projType, projCat, description, software, highlightProject ,user:userId
     });
 
     // Save the new project document in the database
@@ -24,4 +31,4 @@ async function createProjects(req, res) {
   }
 }
 
-export default connectToDatabse(createProjects); // Ensure the function name is correctly referenced
+export default createProjects; // Ensure the function name is correctly referenced

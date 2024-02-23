@@ -1,16 +1,21 @@
 import { workHistory } from "@/model/WorkHistory";
-import { connectToDatabse } from "../connectdb";
+import jwt from "jsonwebtoken"
+import { connectDb } from "@/utils/db";
+
 
 async function createWorkHistory(req, res) {
     if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'Method Not Allowed' });
   }
 
-  const { compName, designation, from,to, description} = req.body;
   try {
-
+await connectDb();
+const token = req.headers.cookie.split("=")[1];
+const decode = jwt.verify(token,process.env.JWT_SECRET)
+ const userId = decode.user_id;
+const { compName, designation, from,to, description} = req.body;
    const newWorkHistory = new workHistory({
-compName, designation, from,to, description
+compName, designation, from,to, description,user:userId
    })
     
     await newWorkHistory.save();
@@ -21,4 +26,4 @@ compName, designation, from,to, description
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 }
-export default connectToDatabse(createWorkHistory);
+export default createWorkHistory;

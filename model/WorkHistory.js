@@ -6,6 +6,11 @@ const schema = new mongoose.Schema({
         from: Date,
         to: Date,
         description: String,
+        user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User', 
+                required: false 
+              }
 
 })
 mongoose.models = {};

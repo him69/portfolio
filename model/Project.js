@@ -6,7 +6,12 @@ const schema = new mongoose.Schema({
         projCat: String,
         description: String,
         software: String,
-        highlightProject: Boolean
+        highlightProject: Boolean,
+        user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User', 
+                required: false 
+              }
 
 })
 mongoose.models = {};

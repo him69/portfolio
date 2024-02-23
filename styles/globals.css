@@ -33,6 +33,7 @@ h1,h2,h3,h4,h5,h6,button{
   background: url('/images/bgimg.png');
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 .midLine{
   padding: 0 3px;
