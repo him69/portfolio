@@ -1,8 +1,6 @@
 import { connectDb } from "@/utils/db";
-// import { connectToDatabse } from "../connectdb";
 import { Project } from "@/model/Project";
-// import jwt from "jsonwebtoken"
-// import { User } from "@/model/User";
+
 
 const allProjects = async (req,res) => {
   try {

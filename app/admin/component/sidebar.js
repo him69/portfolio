@@ -1,16 +1,17 @@
 import React from 'react'
+import Link from 'next/link'
 
 const sidebar = () => {
   return (
-    <div className='w-1/3 drop-shadow-lg bg-white h-[calc(100vh-3rem)]'>
+    <div className='w-1/6 drop-shadow-lg bg-white h-[calc(100vh-3rem)]'>
         <div className="linkDiv px-6 py-3 active">
-            <a href="#" className='text-lg'>Home</a>
+            <Link href="/admin" className='text-lg'>Home</Link>
         </div>
         <div className="linkDiv px-6 py-3">
-            <a href="#" className='text-lg'>Add project</a>
+            <Link href="/admin/addproject" className='text-lg'>Add project</Link>
         </div>
         <div className="linkDiv px-6 py-3">
-            <a href="#" className='text-lg'>Add workhistory</a>
+            <Link href="/admin/addwork" className='text-lg'>Add workhistory</Link>
         </div>
     </div>
   )

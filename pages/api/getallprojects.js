@@ -1,5 +1,4 @@
 import { connectDb } from "@/utils/db";
-// import { connectToDatabse } from "../connectdb";
 import { Project } from "@/model/Project";
 import jwt from "jsonwebtoken"
     import { User } from "@/model/User";
@@ -11,7 +10,7 @@ const getallProjects = async (req,res) => {
    const token = req.headers.cookie.split("=")[1];
    const decode = jwt.verify(token,process.env.JWT_SECRET)
     const user = await User.findById(decode.user_id);
-    console.log(user);
+    // console.log(user);
     const Projects = await Project.find()
    if(!Projects){
     res.status(404).json({
