@@ -159,3 +159,51 @@ transition: all .3s ease-in;
 .linkDiv.active{
   border-bottom: 1px solid var(--tertiary);
 }
+
+@media (max-width: 768px) {
+  .workNum {
+    border: 3px solid var(--tertiary);
+    border-radius: 6px;
+    transform: rotate(-45deg);
+    /* padding: 20px; */
+    height: 40px;
+    width: 42px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.midLine {
+  padding: 0 2px;
+  height: 100%;
+  position: absolute;
+  left: 3%;
+  right: unset;
+  transform: translateX(-50%);
+  top: 0;}
+  .bLine:nth-last-child(odd)::before {
+    content: "";
+    width: 26%;
+    padding: 1px;
+    position: absolute;
+    top: 100%;
+    right: 73%;
+    background-color: var(--tertiary);
+}
+.bLine2::before {
+  content: "";
+  width: 26%;
+  padding: 1px;
+  position: absolute;
+  top: 100%;
+  left: 1%;
+  background-color: var(--tertiary);}
+  .abLine::before {
+    content: "";
+    width: 19%;
+    padding: .1px;
+    position: absolute;
+    top: 100%;
+    right: 81%;
+    background-color: white;}
+}
