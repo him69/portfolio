@@ -27,6 +27,64 @@ const page = () => {
                 return null; // or some default content
         }
     };
+    // get all project
+    const [projects, setProjects] = useState([]);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            const response = await fetch('/api/getallprojects', {
+                method: 'GET',
+                headers: {
+                    // Include any necessary headers, such as authentication tokens
+                },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setProjects(data.Projects); // Assuming the response body has a 'Projects' field
+            } else {
+                // Handle errors or unsuccessful responses
+                console.error('Failed to fetch projects');
+            }
+        };
+
+        fetchProjects();
+    }, []);
+    // get all work
+    const [workHistories, setWorkHistories] = useState([]);
+
+    useEffect(() => {
+        const fetchWorkHistories = async () => {
+            try {
+                const response = await fetch('/api/getallwork', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Include the cookie in the request if your API requires authentication
+                        // 'Cookie': document.cookie,
+                    },
+                    credentials: 'include', // Necessary for including cookies in the request
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setWorkHistories(data.wh); // Assuming the response has a 'wh' field with the work history data
+                } else {
+                    // Handle HTTP errors
+                    console.error('Failed to fetch work histories');
+                }
+            } catch (error) {
+                // Handle fetch errors
+                console.error('An error occurred:', error);
+            }
+        };
+
+        fetchWorkHistories();
+    }, []);
+    // get correct fromate of date
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+      };
+
     return (
         <div>
             <Topbar />
@@ -49,24 +107,21 @@ const page = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
-                                <td className='border-e border-white'>1</td>
-                                <td className='border-e border-white'>apple</td>
-                                <td className='border-e border-white'>ecommerse</td>
-                                <td className='border-e border-white'>modern</td>
-                                <td className='border-e border-white'><p className='truncate'> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt facilis voluptatem amet dolorem impedit eos illo fugiat vel eligendi. Ducimus qui cumque in recusandae accusantium quo vero accusamus non ullam. </p></td>
-                                <td className='border-e border-white'>mongo,next,react</td>
-                                <td className='border-e border-white'><a href="#">view</a></td>
-                                <td className='border-e border-white'><select name="" id="">
-                                    <option value="">select</option>
-                                    <option value="false">false</option>
-                                    <option value="true">true</option>
-                                </select></td>
-                                <td>
-                                    <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                                        onClick={() => { setModalOpen(true); setActiveForm('project'); }}>Edit</button>
-                                </td>
-                            </tr>
+                            {projects.map((project, index) => (
+                                <tr key={index} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+                                    <td className='border-e border-white'>{index + 1}</td>
+                                    <td className='border-e border-white'>{project.compName}</td>
+                                    <td className='border-e border-white'>{project.projType}</td>
+                                    <td className='border-e border-white'>{project.projCat}</td>
+                                    <td className='border-e border-white'><p className='truncate'>{project.description}</p></td>
+                                    <td className='border-e border-white'>{project.software}</td>
+                                    <td className='border-e border-white'><a href={project.projImage}>view</a></td>
+                                    <td className='border-e border-white'>{project.highlightProject.toString()}</td>
+                                    <td>
+                                        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => { setModalOpen(true); setActiveForm('project'); }}>Edit</button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                     <table className='table-fixed w-full text-sm text-center mt-6 text-gray-500 dark:text-gray-400'>
@@ -80,19 +135,21 @@ const page = () => {
                                 <th scope="col" className="px-6 py-3" >action</th>
                             </tr>
                         </thead>
+
                         <tbody>
-                            <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
-                                <td className='border-e border-white'>1</td>
-                                <td className='border-e border-white'>apple</td>
-                                <td className='border-e border-white'>frontend devloper</td>
-                                <td className='border-e border-white'><p className='truncate'> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt facilis voluptatem amet dolorem impedit eos illo fugiat vel eligendi. Ducimus qui cumque in recusandae accusantium quo vero accusamus non ullam. </p></td>
-                                <td className='border-e border-white'>12 jan 2022</td>
-                                <td className='border-e border-white'>12 jan 2023</td>
-                                <td>
-                                    <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                                        onClick={() => { setModalOpen(true); setActiveForm('experience'); }}>Edit</button>
-                                </td>
-                            </tr>
+                            {workHistories.map((work, index) => (
+                                <tr key={index} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+                                    <td className='border-e border-white'>{index + 1}</td>
+                                    <td className='border-e border-white'>{work.compName}</td>
+                                    <td className='border-e border-white'>{work.designation}</td>
+                                    <td className='border-e border-white'><p className='truncate'>{work.description}</p></td>
+                                    <td className='border-e border-white'>{formatDate(work.from)}</td>
+                                    <td className='border-e border-white'>{formatDate(work.to)}</td>
+                                    <td>
+                                        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"   onClick={() => { setModalOpen(true); setActiveForm('experience'); }}>Edit</button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
 

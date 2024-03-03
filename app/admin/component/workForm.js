@@ -19,10 +19,37 @@ const ExperienceForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form Data Submitted:', formData);
-    // Here, you can add your code to handle the form data submission, such as sending it to a server
+
+    // Assuming the endpoint for creating work history is `/api/createWorkHistory`
+    const endpoint = '/api/createworkhistory';
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Include credentials and other headers as needed
+      },
+      body: JSON.stringify(formData),
+    };
+
+    try {
+      const response = await fetch(endpoint, options);
+      const result = await response.json();
+
+      if (response.ok) {
+        // Handle success
+        console.log('Work History created successfully:', result);
+        // You might want to clear the form or give feedback to the user
+      } else {
+        // Handle server-side validation errors or other issues
+        console.error('Failed to create work history:', result.message);
+        // Provide feedback to the user as needed
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+      // Handle the error, possibly by showing an error message to the user
+    }
   };
 
   return (

@@ -1,8 +1,6 @@
 import { Project} from "@/model/Project";
-import { connectToDatabse } from "../connectdb";
 import { connectDb } from "@/utils/db";
 import jwt from "jsonwebtoken"
-import { User } from "@/model/User";
 
 async function createProjects(req, res) {
   if (req.method !== 'POST') {
@@ -13,6 +11,9 @@ async function createProjects(req, res) {
 
   try {
     await connectDb();
+    if (!req.headers.cookie) {
+      return res.status(400).json({ success: false, message: 'No cookie found' });
+    }
     const token = req.headers.cookie.split("=")[1];
     const decode = jwt.verify(token,process.env.JWT_SECRET)
      const userId = decode.user_id;

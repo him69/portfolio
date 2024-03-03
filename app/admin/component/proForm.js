@@ -19,11 +19,38 @@ const proForm = () => {
         });
       };
     
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form Data Submitted:', formData);
-        // Here you can add your code to handle the form data, like sending it to a backend server
-      };
+    
+        // Assuming your API endpoint for creating a project is `/api/projects`
+        const endpoint = '/api/createproject';
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // If you're dealing with cookies (for auth tokens), ensure credentials are included
+            'Cookie': document.cookie // Only if your auth mechanism requires it
+          },
+          body: JSON.stringify(formData),
+          credentials: 'include' // Necessary for including cookies in cross-origin requests
+        };
+    
+        try {
+          const response = await fetch(endpoint, options);
+          const result = await response.json();
+          if (response.ok) {
+            console.log('Project created successfully:', result);
+            // Here, you can add actions upon successful creation, like clearing the form or showing a success message
+          } else {
+            console.error('Failed to create project:', result.message);
+            // Handle errors, such as displaying a notification to the user
+          }
+        } catch (error) {
+          console.error('An error occurred:', error);
+          // Handle the error, such as displaying a notification to the user
+        }
+    };
+    
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
     <div>

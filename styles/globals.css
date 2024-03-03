@@ -2,11 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Zilla+Slab:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap');
 
 :root{
   --primaryColor:#202124;
   --scondaryColor:#414141;
   --tertiary:#AE9670;
+}
+@font-face {
+  font-family:Zilla Slab ;
+  src: url(../public/fonts/Zilla_Slab/ZillaSlab-Bold.ttf);
+}
+@font-face {
+  font-family: Lato;
+  src: url(../public/fonts/Lato/Lato-Light.ttf);
 }
 .pBgColor{
   background-color: var(--primaryColor);
@@ -24,10 +33,10 @@
   letter-spacing: 3.42px;
 }
 a,p{
- font-family: 'Lato', sans-serif;;
+ font-family: Lato;
 }
 h1,h2,h3,h4,h5,h6,button{
-  font-family: 'Zilla Slab';
+  font-family:Zilla Slab;
 }
 .myBgImage{
   background: url('/images/bgimg.png');
@@ -62,7 +71,7 @@ content: "";
   width: 26%;
   padding: 1px;
   position: absolute;
-  top: 100%;
+  top: 10%;
   right: 0;
   background-color: var(--tertiary);
 }
@@ -80,7 +89,7 @@ content: "";
   width: 26%;
   padding: 1px;
   position: absolute;
-  top: 100%;
+  top: 10%;
   left: 0;
   background-color: var(--tertiary);
 }
@@ -161,6 +170,13 @@ transition: all .3s ease-in;
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    position: static;
+  }
+  .projImg {
+    height: 50dvw;
+    width: 40dvh;
+  }
   .workNum {
     border: 3px solid var(--tertiary);
     border-radius: 6px;
@@ -183,20 +199,20 @@ transition: all .3s ease-in;
   top: 0;}
   .bLine:nth-last-child(odd)::before {
     content: "";
-    width: 26%;
+    width: 75%;
     padding: 1px;
     position: absolute;
-    top: 100%;
-    right: 73%;
+    top: 11%;
+    right: 25%;
     background-color: var(--tertiary);
 }
 .bLine2::before {
   content: "";
-  width: 26%;
+  width: 75%;
   padding: 1px;
   position: absolute;
-  top: 100%;
-  left: 1%;
+  top: 11%;
+  left: 0%;
   background-color: var(--tertiary);}
   .abLine::before {
     content: "";

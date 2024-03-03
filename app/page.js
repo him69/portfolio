@@ -89,8 +89,8 @@ useEffect(()=>{
             </div>
           </div>
           <div className='md:w-1/2 w-full px-4 order-1 md:order-2'>
-            <p className='pTextColor '>About</p>
-            <h3 className='text-3xl font-bold mt-4'>Me & My Design</h3>
+            <p className='pTextColor text-center md:text-start'>About</p>
+            <h3 className='text-3xl font-bold mt-4 text-center md:text-start'>Me & My Design</h3>
           </div>
         </div>
         <div className="myFeature md:flex block md:justify-between container mx-auto md:absolute relative md:left-1/2 md:right-1/2 md:-translate-x-1/2 translate-y-24" style={{ top: '18%' }}>
@@ -120,7 +120,8 @@ useEffect(()=>{
         alt="Description of the image"
         width={500} // Desired width
         height={300} // Desired height
-        layout='responsive' // This makes the image scale with the parent element
+        layout='responsive'
+        className='block md:hidden'
       />
     </div>
       </section>
@@ -140,11 +141,11 @@ useEffect(()=>{
           ? (
             // Even project layout
             <div className="flex justify-center md:flex-row flex-col mx-3" key={index}>
-              <div className='md:w-1/2'>
+              <div className='md:w-1/2 relative'>
                 {/* Assuming 'projType' and other project-specific details are used here */}
-                <h4 className='md:text-right text-left text-2xl bLine relative tracking-widest px-2'>{project.projType}</h4>
+                <h4 className='md:text-right text-left text-2xl bLine tracking-widest px-2'>{project.projType}</h4>
                 <p className='md:text-right text-left pTextColor text-xl px-2'>{project.projCat}</p>
-                <div className='projImg mt-4 md:ml-28 ml-16'>
+                <div className='projImg mt-4 md:ml-28 ml-24'>
                   {/* Use project-specific image if available */}
                   <img src={project.projImage || "/images/pr.jpeg"} alt="" />
                 </div>
@@ -160,12 +161,12 @@ useEffect(()=>{
             <div className="flex justify-center md:flex-row flex-col mx-3" key={index}>
               <div className="pt-12 md:w-1/2 px-2 order-2 md:order-1">
                 <p className="abLine md:text-right text-left relative mx-1 md:mx-0">About Project</p>
-                <p className="mt-4 md:text-right text-left pl-8">{project.description}</p>
+                <p className="mt-4 md:text-right text-left md:pl-8">{project.description}</p>
               </div>
-              <div className="md:w-1/2 order-1 md:order-2">
-                <h4 className="text-2xl bLine2 relative tracking-widest px-2">{project.projType}</h4>
+              <div className="md:w-1/2 order-1 relative md:order-2">
+                <h4 className="text-2xl bLine2  tracking-widest px-2">{project.projType}</h4>
                 <p className="pTextColor text-xl px-2">{project.projCat}</p>
-                <div className="projImg mt-4 md:ml-28 ml-16" >
+                <div className="projImg mt-4 md:ml-28 ml-24" >
                   {/* Use project-specific image if available */}
                   <img src={project.projImage || "/images/pr.jpeg"} alt="" />
                 </div>
@@ -180,7 +181,7 @@ useEffect(()=>{
       {/* projects and softwere */}
       <section className='sBgColor text-white pb-12' id='projects'>
         <div className="container mx-auto">
-          <div className="flex justify-center">
+          <div className="flex justify-center flex-col md:flex-row text-center md:text-start align-items-center">
             <div className='px-2'>
               <p className='pTextColor py-4'>Software</p>
               <h3 className='text-3xl font-bold'>Softwaer I use</h3>
