@@ -14,9 +14,20 @@ import '@/styles/globals.css'
 
 const page = () => {
     const [isModalOpen, setModalOpen] = useState(false);
-    const [activeForm, setActiveForm] = useState('project'); // Could be 'project' or 'experience'
-
+    const [activeForm, setActiveForm] = useState('project');
+    const [currentProject, setCurrentProject] = useState(null);
+    const [currentWork, setCurrentWork] = useState(null);
     // Function to determine which form to render
+    const handleEditProject = (project) => {
+        setCurrentProject(project); // Set the current project to be edited
+        setActiveForm('project'); // Set form type
+        setModalOpen(true); // Open the modal
+    };
+    const handleEditWork = (work) => {
+        setCurrentWork(work); // Set the current work to be edited
+        setActiveForm('experience'); // Indicate that we're editing a work history
+        setModalOpen(true); // Open the modal
+      };
     const renderForm = () => {
         switch (activeForm) {
             case 'project':
@@ -83,7 +94,7 @@ const page = () => {
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'short', day: 'numeric' };
         return new Date(dateString).toLocaleDateString('en-US', options);
-      };
+    };
 
     return (
         <div>
@@ -118,7 +129,7 @@ const page = () => {
                                     <td className='border-e border-white'><a href={project.projImage}>view</a></td>
                                     <td className='border-e border-white'>{project.highlightProject.toString()}</td>
                                     <td>
-                                        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => { setModalOpen(true); setActiveForm('project'); }}>Edit</button>
+                                        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => handleEditProject(project)}>Edit</button>
                                     </td>
                                 </tr>
                             ))}
@@ -146,7 +157,7 @@ const page = () => {
                                     <td className='border-e border-white'>{formatDate(work.from)}</td>
                                     <td className='border-e border-white'>{formatDate(work.to)}</td>
                                     <td>
-                                        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"   onClick={() => { setModalOpen(true); setActiveForm('experience'); }}>Edit</button>
+                                        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => handleEditWork(work)}>Edit</button>
                                     </td>
                                 </tr>
                             ))}
@@ -154,7 +165,11 @@ const page = () => {
                     </table>
 
                     <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-                        {renderForm()}
+                        {activeForm === 'project' ? (
+                            <ProForm projectData={currentProject} onClose={() => setModalOpen(false)} />
+                        ) : activeForm === 'experience' ? (
+                            <ExperienceForm workData={currentWork} onClose={() => setModalOpen(false)} />
+                        ) : null}
                         <button
                             className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
                             onClick={() => setModalOpen(false)}

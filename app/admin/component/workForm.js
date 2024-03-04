@@ -1,56 +1,79 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 
-const ExperienceForm = () => {
+const ExperienceForm = ({ workData, onClose }) => {
+  const formatDateForInput = (dateString) => {
+    return new Date(dateString).toISOString().split('T')[0];
+  };
+  
   const [formData, setFormData] = useState({
-    compName: '',
-    designation: '',
-    from: '',
-    to: '',
-    description: '',
+    compName: workData ? workData.compName : '',
+    designation: workData ? workData.designation : '',
+    from: workData ? workData.from : '',
+    to: workData ? workData.to : '',
+    description: workData ? workData.description : '',
   });
 
+  // Update formData when workData changes (e.g., when editing a different record)
+  useEffect(() => {
+    if (workData) {
+      setFormData({
+        compName: workData.compName || '',
+        designation: workData.designation || '',
+        from: workData.from ? formatDateForInput(workData.from) : '',
+        to: workData.to ? formatDateForInput(workData.to) : '',
+        description: workData.description || '',
+      });
+    } else {
+      setFormData({
+        compName: '',
+        designation: '',
+        from: '',
+        to: '',
+        description: '',
+      });
+    }
+  }, [workData]);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(prevState => ({
+      ...prevState,
       [name]: value,
-    });
+    }));
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Assuming the endpoint for creating work history is `/api/createWorkHistory`
-    const endpoint = '/api/createworkhistory';
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // Include credentials and other headers as needed
-      },
-      body: JSON.stringify(formData),
-    };
-
+  
+    // Determine whether to create a new record or update an existing one
+    const endpoint = workData ? `/api/workhistory/${workData._id}` : '/api/createworkhistory';
+    const method = workData ? 'PUT' : 'POST';
+  
     try {
-      const response = await fetch(endpoint, options);
+      const response = await fetch(endpoint, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
       const result = await response.json();
-
+  
       if (response.ok) {
-        // Handle success
-        console.log('Work History created successfully:', result);
-        // You might want to clear the form or give feedback to the user
+        console.log(`${workData ? 'Updated' : 'Created'} successfully:`, result);
+        if (workData && workData._id) {
+          onClose(); // Close the modal and potentially refresh the list
+        }
       } else {
-        // Handle server-side validation errors or other issues
-        console.error('Failed to create work history:', result.message);
-        // Provide feedback to the user as needed
+        // If the server responds with an error status, handle it here
+        console.error(`Failed to ${workData ? 'update' : 'create'}:`, result.message);
+        // Display an error message or take other actions based on the error
       }
     } catch (error) {
-      console.error('An error occurred:', error);
-      // Handle the error, possibly by showing an error message to the user
+      console.error('An error occurred during the fetch operation:', error);
+      // Handle network errors or other errors not related to the server's response
     }
   };
+  
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

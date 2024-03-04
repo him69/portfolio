@@ -1,55 +1,71 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 
-const proForm = () => {
-    const [formData, setFormData] = useState({
-        projImage: '',
-        projType: '',
-        projCat: '',
-        description: '',
-        software: '',
-        highlightProject: false,
+const proForm = ({ projectData, onClose }) => {
+  const initialState = {
+    projImage: '',
+    projType: '',
+    projCat: '',
+    description: '',
+    software: '',
+    highlightProject: false,
+  };
+
+  const [formData, setFormData] = useState(initialState);
+
+  // Populate form data when projectData is provided
+  useEffect(() => {
+    if (projectData) {
+      setFormData({
+        projImage: projectData.projImage || '',
+        projType: projectData.projType || '',
+        projCat: projectData.projCat || '',
+        description: projectData.description || '',
+        software: projectData.software || '',
+        highlightProject: projectData.highlightProject || false,
       });
-    
-      const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData({
-          ...formData,
-          [name]: type === 'checkbox' ? checked : value,
-        });
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        // Assuming your API endpoint for creating a project is `/api/projects`
-        const endpoint = '/api/createproject';
-        const options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            // If you're dealing with cookies (for auth tokens), ensure credentials are included
-            'Cookie': document.cookie // Only if your auth mechanism requires it
-          },
-          body: JSON.stringify(formData),
-          credentials: 'include' // Necessary for including cookies in cross-origin requests
-        };
-    
-        try {
-          const response = await fetch(endpoint, options);
-          const result = await response.json();
-          if (response.ok) {
-            console.log('Project created successfully:', result);
-            // Here, you can add actions upon successful creation, like clearing the form or showing a success message
-          } else {
-            console.error('Failed to create project:', result.message);
-            // Handle errors, such as displaying a notification to the user
-          }
-        } catch (error) {
-          console.error('An error occurred:', error);
-          // Handle the error, such as displaying a notification to the user
+    } else {
+      setFormData(initialState); // Reset form if no projectData is present
+    }
+  }, [projectData]);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Determine the endpoint and method based on the presence of projectData._id
+    const endpoint = projectData && projectData._id
+      ? `/api/projects/${projectData._id}`
+      : '/api/createproject';
+    const method = projectData && projectData._id ? 'PUT' : 'POST';
+
+    try {
+      const response = await fetch(endpoint, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log(`Project ${projectData && projectData._id ? 'updated' : 'created'} successfully:`, result);
+        if (projectData && projectData._id) {
+          onClose(); // Close the modal and potentially refresh the list
         }
-    };
+      } else {
+        console.error(`Failed to ${projectData && projectData._id ? 'update' : 'create'} project:`, result.message);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
     
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -79,7 +95,7 @@ const proForm = () => {
         <span className="ml-2 text-sm font-medium text-gray-400">Highlight Project</span>
       </label>
     </div>
-    <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Submit</button>
+    <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">{projectData && projectData._id ? 'Update' : 'Create'}</button>
   </form>
   )
 }

@@ -7,7 +7,7 @@ import { workHistory } from "@/model/WorkHistory";
 
 
 export default async function updateworkhistory(req, res) {
-    if (req.method !== 'POST') {
+    if (req.method !== 'PUT') {
         return res.status(405).json({ success: false, message: 'Method Not Allowed' });
     }
     try {   
