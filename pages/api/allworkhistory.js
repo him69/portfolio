@@ -1,10 +1,11 @@
 import { workHistory } from "@/model/WorkHistory";
-import { connectToDatabse } from "../connectdb";
+import { connectDb } from "@/utils/db";
 
 
 async function getWorkHistory(req, res) {
 
     try {
+        await connectDb();
         const getWorkHistory =await workHistory.find();
         if(getWorkHistory)
         res.status(200).json({
@@ -19,4 +20,4 @@ async function getWorkHistory(req, res) {
         })
     }
 }
-export default connectToDatabse(getWorkHistory);
+export default getWorkHistory;
