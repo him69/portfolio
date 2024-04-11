@@ -223,3 +223,16 @@ transition: all .3s ease-in;
     right: 81%;
     background-color: white;}
 }
+/* extra css */
+.img img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+.img {
+  width: 74px;
+  margin: 0 2px;
+}
+.align-items-end{
+  align-items: end;
+}
