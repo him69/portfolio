@@ -52,7 +52,7 @@ function App() {
     //   </div>
     // </CartProvider>
     <>
-    
+    <FormSub />
    
     </>
   );

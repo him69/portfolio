@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root{
+  --heroSection:#f7e7ce;
+}
+@font-face {
+    font-family:Balerga ;
+    src: url(../public/fonts/Balerga.otf);
+  }
+@font-face {
+    font-family:CinzelDecorative ;
+    src: url(../public/fonts//cinzel/CinzelDecorative-Regular.otf);
+  }
+@font-face {
+    font-family:CinzelBlack ;
+    src: url(../public/fonts//cinzel/Cinzel-Black.otf);
+  }
+@font-face {
+    font-family:StretchPro ;
+    src: url(../public/fonts/StretchPro.otf);
+  }
+  body{
+    overflow-x: hidden;
+  }
+  .Balerga{
+    font-family: Balerga, 'Segoe UI'; 
+ }
+ .primaryF2{
+  font-family:CinzelDecorative ;
+ }
+ .primaryF3{
+  font-family:CinzelBlack ;
+ }
+ .primaryF4{
+  font-family:StretchPro ;
+ }
+ p{
+  font-size: 45px;
+ }
+ .PrimeShade{
+  background-color: var(--heroSection);
+
+ }
+ @keyframes noise-animation {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 100%; }
+}
+
+.noise {
+  position: absolute;
+  opacity: 0.2;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  color: rgb(0, 0, 0);
+  position: absolute;
+  background: url('https://framerusercontent.com/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png') repeat;
+  z-index: -1;
+}

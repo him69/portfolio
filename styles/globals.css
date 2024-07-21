@@ -236,3 +236,24 @@ transition: all .3s ease-in;
 .align-items-end{
   align-items: end;
 }
+.hello{
+  /* position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  border-top: 1px dotted  var(--tertiary);
+  background-image: radial-gradient(circle at 50% 50%, black 20%, transparent 20.5%, transparent 49.5%, black 50%);
+  background-size: 15px 15px;
+  backdrop-filter: blur(20px) brightness(30%);
+  -webkit-backdrop-filter: blur(20px) brightness(30%);
+  -moz-backdrop-filter: blur(20px) brightness(30%);
+  font-size: 14px;
+  line-height: 14px;
+  z-index: 0;
+  opacity: .5;
+  height: 100vh; */
+}

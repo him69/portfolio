@@ -53,6 +53,7 @@ const page = () => {
       <Navbar />
       {/* <Tec/> */}
       {/* header section */}
+      <div className='hello'></div>
       <header className='pBgColor text-white' id='home'>
         <div className='block md:flex md:justify-between container mx-auto'>
           <div className='md:w-1/2 w-full px-4'>
