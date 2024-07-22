@@ -18,6 +18,7 @@ import DisplayList from './component/UseCart';
 import Home from './home/page';
 import About from './component/About';
 import Link from 'next/link';
+import Box from './component/Box';
 function App() {
   const name = 'sukoon'
   const initialSec = 15;
@@ -53,7 +54,7 @@ function App() {
     // </CartProvider>
     <>
     <FormSub />
-   
+    <Box/>
     </>
   );
 }
