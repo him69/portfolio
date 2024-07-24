@@ -1,22 +1,17 @@
 'use client'
-import React from "react";
-import { motion } from "framer-motion";
-const RotatingImg = () => {
+import React, { useEffect } from "react";
+import { motion, useAnimate } from "framer-motion";
+const RotatingImg = ({ani}) => {
+    const [scope , animate] = useAnimate()
+    useEffect(()=>{
+        animate(scope.current,{scale:ani},{duration:.5})
+    },[ani,scope,animate])
     return (
         <>
             <motion.div
-                className="absolute z-0 w-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mix-blend-luminosity"
-                // animate={{
-                //     rotate: [0, 360],
-                //     scale: [.5, .5, .5],
-                //     x: ['-50%', '-50%'],
-                //     y: ['-50%', '-50%'],
-                // }}
-                // transition={{
-                //     repeat: Infinity,
-                //     duration: 20,
-                //     ease: 'linear',
-                // }}
+            ref={scope}
+                className="absolute z-[-1] w-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 "
+               
             >
                 <img
                     src="http://localhost:3000/images/star.png"

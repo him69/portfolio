@@ -58,3 +58,10 @@
   background: url('https://framerusercontent.com/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png') repeat;
   z-index: -1;
 }
+.underline {
+  background-color: black; /* Adjust as needed */
+  height: 2px; /* Adjust as needed */
+  bottom: -5px; /* Adjust as needed */
+  left: 0;
+  right: 0;
+}
