@@ -29,7 +29,9 @@ const Layout = ({ children }) => {
   return (
     <div>
       <Navigation />
-      <main>{children}</main>
+      <main style={{
+        overflowX:'hidden'
+      }}>{children}</main>
     </div>
   );
 };

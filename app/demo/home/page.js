@@ -6,17 +6,21 @@ import DotAlongPath from "../component/svgAnim";
 // import SharedLayoutComponent from "../framerComponents/parent";
 import LayoutAnimationExample from "../framerComponents/Mycomp";
 import SharedLayoutAnimation from "../framerComponents/parent";
+import ScrollTriggeredAnimation from "../framerComponents/scroll";
+import ScrollSec from "../framerComponents/ScrollSec";
 
 
 const Home = () => {
     return <>
         <p>Helo, from Home</p>
-        <LayoutAnimationExample/>
+        <ScrollSec/>
+        {/* <LayoutAnimationExample/> */}
+        <ScrollTriggeredAnimation/>
         {/* <SharedLayoutComponent/> */}
         {/* <MorphingShapes/> */}
-        <SharedLayoutAnimation/>
-        <AdvanceMotion/>
-        <DotAlongPath/>
+        {/* <SharedLayoutAnimation/> */}
+        {/* <AdvanceMotion/> */}
+        {/* <DotAlongPath/> */}
         </>
 }
 export default Home;

@@ -3,7 +3,7 @@ import '@/styles/portfolio.css';
 const Layout = ({ children }) => {
   return (
     <div>
-      <main>{children}</main>
+      <main >{children}</main>
     </div>
   );
 };
