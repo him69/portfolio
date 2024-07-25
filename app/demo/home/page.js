@@ -8,11 +8,13 @@ import LayoutAnimationExample from "../framerComponents/Mycomp";
 import SharedLayoutAnimation from "../framerComponents/parent";
 import ScrollTriggeredAnimation from "../framerComponents/scroll";
 import ScrollSec from "../framerComponents/ScrollSec";
+import AnimationControlExample from "../framerComponents/ControllAnimation";
 
 
 const Home = () => {
     return <>
         <p>Helo, from Home</p>
+        <AnimationControlExample/>
         <ScrollSec/>
         {/* <LayoutAnimationExample/> */}
         <ScrollTriggeredAnimation/>

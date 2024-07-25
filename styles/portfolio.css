@@ -3,6 +3,7 @@
 @tailwind utilities;
 :root{
   --heroSection:#f7e7ce;
+  --secondary:#758bfd;
 }
 @font-face {
     font-family:Balerga ;
@@ -22,6 +23,7 @@
   }
   body{
     overflow-x: hidden;
+    background-color: var(--heroSection);
   }
   .Balerga{
     font-family: Balerga, 'Segoe UI'; 
@@ -40,6 +42,10 @@
  }
  .PrimeShade{
   background-color: var(--heroSection);
+
+ }
+ .SecShade{
+  background-color: var(--secondary);
 
  }
  @keyframes noise-animation {
