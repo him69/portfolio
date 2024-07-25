@@ -14,7 +14,7 @@ const SecTwo = () => {
     <div className={`h-[100vh] relative overflow-hidden ${isInView ? 'SecShade' : ''}`} ref={ref}>
       <motion.div
         className="absolute z-10 w-[500px] top-1/2 left-1/2 -translate-x-1/2"
-        style={{ scale, y,x:'-50%',rotate:'39deg' }}
+        style={{ scale, y,x:'-50%',rotate:'39deg',zIndex:10 }}
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1, scale: 2, y: '-34%' } : { opacity: 0 }}
         transition={{ duration: 0.5 }}
